@@ -1,5 +1,5 @@
 {
-    "manifest_version": 1,
+    "manifest_version": 3,
     "name": "sundlf-bookmark-addon",
     "version": "1.0.0",
     "description": "Vue3でChrome拡張を作成したサンプルです。",
