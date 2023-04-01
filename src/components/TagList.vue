@@ -10,6 +10,10 @@ const props = defineProps({
         type:String,
         default:"つけたタグ"
     },
+    lang:{
+        type:String,
+        default:"en"
+    }
 })
 
 const popTag = (i) => {
@@ -21,7 +25,8 @@ const popTag = (i) => {
 
 <template>
     <div class="tagList">
-        <p><v-icon>mdi-tag</v-icon>{{props.text}}</p>
+        <p v-if="lang == 'ja'"><v-icon>mdi-tag</v-icon>つけたタグ</p>
+        <p v-else><v-icon>mdi-tag</v-icon>attached tags</p>
         <ul >
             <li v-for="(tag, i) in props.tagList"
                 :key="tag.name"
