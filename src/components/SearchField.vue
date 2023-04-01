@@ -1,55 +1,57 @@
-<script setup>
-import { ref, onMounted, onUnmounted,nextTick, reactive,defineEmits,defineProps } from 'vue';
-
-let keyword = props.orignalKeyWord ? props.orignalKeyWord :""
-const emits = defineEmits(['triggerSearch'])
-const props = defineProps({
-    orignalKeyWord:{
-        type:String,
-        default:""
-    },
-    searchLabel:{
-        type:String,
-        default:"検索"
-    },
-    loadingFlag:{
-        type:Boolean,
-        default:false,
-    },
-    lang:{
-        type:String,
-        default:"ja"
-    }
-})
-const triggerSearch = () => {emits('triggerSearch')}
-const serveKeywordToParent = () => {return keyword}
-const resetKeyword = () => {keyword=""}
-
-</script>
-
 <template>
     <div class="searchField">
-        {{ keyword }}
         <v-form v-on:submit.prevent ="triggerSearch()">
             <input 
                 type="search" id="search" 
-                v-model="keyword" placeholder="タグ名"
-                :disabled = "loadingFlag"
+                v-model="keyword" :placeholder="lang == 'ja'? 'タグ名':'tag'"
             >
             <v-btn color="submit"
-                size="small"
                 class="global_css_haveIconButton_Margin"
                 elevation="2"
-                :loading = "loadingFlag"
-                :disabled = "loadingFlag"
+                size="small"
                 @click.stop="triggerSearch()">
                 <v-icon>mdi-magnify</v-icon>
-                <p v-if="props.lang == 'ja'">検索</p>
+                <p v-if="lang == 'ja'">検索</p>
                 <p v-else>search</p>
             </v-btn>
         </v-form>
     </div>
 </template>
+
+<script>
+export default{
+    data() {
+        return {
+            // propsのoriginalKeyWordがnullの時は ""
+            keyword:this.orignalKeyWord ? this.orignalKeyWord :""
+        }
+    },
+    props:{
+        orignalKeyWord:{
+            type:String,
+            default:""
+        },
+        searchLabel:{
+            type:String,
+            default:"検索"
+        },
+        loadingFlag:{
+            type:Boolean,
+            default:false,
+        },
+        lang:{
+            type:String,
+            default:"ja"
+        }
+    },
+    methods: {
+        triggerSearch(){this.$emit('triggerSearch')},
+        serveKeywordToParent(){return this.keyword},
+        resetKeyword(){this.keyword=""}
+    },
+}
+
+</script>
 
 
 

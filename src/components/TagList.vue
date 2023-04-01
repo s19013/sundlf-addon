@@ -1,34 +1,9 @@
-<script setup>
-import { ref, onMounted, onUnmounted,nextTick, reactive,defineEmits,defineProps } from 'vue';
-const emits = defineEmits(["popTag"])
-const props = defineProps({
-    tagList:{
-        type:Array,
-        default: () => ([]) 
-    },
-    text:{
-        type:String,
-        default:"つけたタグ"
-    },
-    lang:{
-        type:String,
-        default:"en"
-    }
-})
-
-const popTag = (i) => {
-    emits('popTag',i)
-}
-
-</script>
-
-
 <template>
     <div class="tagList">
         <p v-if="lang == 'ja'"><v-icon>mdi-tag</v-icon>つけたタグ</p>
-        <p v-else><v-icon>mdi-tag</v-icon>attached tags</p>
+        <p v-else><v-icon>mdi-tag</v-icon>Attached Tag</p>
         <ul >
-            <li v-for="(tag, i) in props.tagList"
+            <li v-for="(tag, i) in tagList"
                 :key="tag.name"
             >
                 <v-chip
@@ -42,6 +17,28 @@ const popTag = (i) => {
         </ul>
     </div>
 </template>
+
+<script>
+export default{
+    data() {
+      return {
+      }
+    },
+    props:{
+        tagList:{
+            type:Array,
+            default: () => ([])
+        },
+        lang:{
+            type:String,
+            default:"ja"
+        }
+    },
+    methods: {
+        popTag(i){this.$emit('popTag',i)}
+    },
+}
+</script>
 
 <style lang="scss" scoped>
 .tagList{
