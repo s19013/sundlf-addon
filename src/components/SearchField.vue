@@ -4,11 +4,15 @@
             <input 
                 type="search" id="search" 
                 v-model="keyword" :placeholder="lang == 'ja'? 'タグ名':'tag'"
+                :loading = "loadingFlag"
+                :disabled = "loadingFlag"
             >
             <v-btn color="submit"
                 class="global_css_haveIconButton_Margin"
                 elevation="2"
                 size="small"
+                :loading  = "loadingFlag"
+                :disabled = "loadingFlag"
                 @click.stop="triggerSearch()">
                 <v-icon>mdi-magnify</v-icon>
                 <p v-if="lang == 'ja'">検索</p>
@@ -30,10 +34,6 @@ export default{
         orignalKeyWord:{
             type:String,
             default:""
-        },
-        searchLabel:{
-            type:String,
-            default:"検索"
         },
         loadingFlag:{
             type:Boolean,
