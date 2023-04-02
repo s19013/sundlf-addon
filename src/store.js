@@ -4,6 +4,7 @@ export default createStore({
 	state: {
         lang:"en",
         token:null,
+        globalLoading:false,
 	},
     getters:{},
 	mutations: {
@@ -12,6 +13,9 @@ export default createStore({
         },
         setToken(state,token){
             state.token = token
+        },
+        switchGlobalLoading(state){
+            state.globalLoading = !state.globalLoading
         },
     },
     actions: {
