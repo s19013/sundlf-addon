@@ -2,11 +2,16 @@
     <div>
         <div class="head">
                 <!-- 削除の動きはあとで作る -->
-                <v-btn size="small" color="error" class="global_css_haveIconButton_Margin" >
+                <v-btn
+                    size="small" color="error" class="global_css_haveIconButton_Margin" 
+                >
                     <v-icon>mdi-trash-can</v-icon>
                     <p>{{messages.delete}}</p>
                 </v-btn>
-                <v-btn size="small" color="#BBDEFB" class="global_css_haveIconButton_Margin" @click="submit()" >
+                <v-btn
+                    size="small" color="#BBDEFB" class="global_css_haveIconButton_Margin" 
+                    @click="submit()"
+                >
                     <v-icon>mdi-content-save</v-icon>
                     <p>{{messages.save}}</p>
                 </v-btn>
@@ -33,6 +38,7 @@
             </p>
 
             <input
+                type="text"
                 class="global_css_input"
                 id="title"
                 v-model="bookMarkTitle"
@@ -51,6 +57,7 @@
             </p>
 
             <input
+                type="url"
                 class="global_css_input"
                 id="url"
                 :placeholder="messages.url"
@@ -126,7 +133,6 @@ export default {
                 bookMarkId   :this.bookMarkId,
                 bookMarkTitle:this.bookMarkTitle,
                 bookMarkUrl  :this.bookMarkUrl,
-                tagList      :this.$refs.tagDialog.serveCheckedTagList()
             })
         },
         deleteBookMark() {this.$emit('triggerDeleteBookMark')},
