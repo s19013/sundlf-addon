@@ -12,7 +12,7 @@
             class="global_css_input"
             type="email" required
             v-model="email"
-            :placeholder="$store.state.lang == 'ja'? 'メールアドレス':'email address'"
+            :placeholder="$store.getters.getLang == 'ja'? 'メールアドレス':'email address'"
         >
 
         <p
@@ -27,7 +27,7 @@
             class="global_css_input"
             type="password" required
             v-model="password"
-            :placeholder="$store.state.lang == 'ja'? 'パスワード':'password'"
+            :placeholder="$store.getters.getLang == 'ja'? 'パスワード':'password'"
         >
 
         <v-btn
@@ -36,7 +36,7 @@
             :disabled="localLoading"
             @click="submit()"
         >
-            <p>{{$store.state.lang == 'ja'? 'ログイン':'Log in'}}</p>
+            <p>{{$store.getters.getLang == 'ja'? 'ログイン':'Log in'}}</p>
         </v-btn>
     </div>
 </template>
@@ -53,13 +53,13 @@ export default {
     },
     methods: {
         async submit(){
-            console.log(this.email,this.password);
             await axios.post('api/extended/login',{
                 email:this.email,
                 password:this.password,
             })
             .then((res) => {
-                console.log(res);
+                console.log(res.data);
+                this.$store.commit('setToken',res.data.token)
             })
             .catch((res) => {
                 console.log(res.response.data.messages);
