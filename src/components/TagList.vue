@@ -9,6 +9,7 @@
                 <v-chip
                     size="x-small"
                     closable
+                    :disabled="$store.state.globalLoading"
                     @click:close="popTag(i)"
                 >
                     {{ tag.name }}
