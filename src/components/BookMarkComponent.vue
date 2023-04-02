@@ -87,10 +87,9 @@ export default {
             url:"url [required]",
             otherError:"An error occurred on the server side, please wait a few seconds and try again",
         },
-        bookMarkId :this.originalBookMark.id,
+        bookMarkId    :this.originalBookMark.id,
         bookMarkTitle :this.originalBookMark.title,
         bookMarkUrl   :this.originalBookMark.url,
-        checkedTagList:this.originalCheckedTagList,
 
         // 初期の読み込みで空配列などが無いとエラーを吐かれる
         errorMessages:{
@@ -120,10 +119,6 @@ export default {
                 title:'',
                 url  :''
             })
-        },
-        originalCheckedTagList:{
-            type   :Array,
-            default:() => ([])
         },
     },
     methods: {
