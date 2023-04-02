@@ -72,14 +72,6 @@
                     <v-icon>mdi-content-save</v-icon>
                     <p>{{ messages.create }}</p>
                 </v-btn>
-                <!-- <v-text-field
-                    v-model="newTag"
-                    :label=" messages.tagName "
-                    outlined hide-details="false"
-                    :disabled="disableFlag"
-                    :loading ="disableFlag"
-                >
-                </v-text-field> -->
             </v-form>
         </div>
     </div>
