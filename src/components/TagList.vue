@@ -1,6 +1,6 @@
 <template>
     <div class="tagList">
-        <p v-if="lang == 'ja'"><v-icon>mdi-tag</v-icon>つけたタグ</p>
+        <p v-if="$store.state.lang == 'ja'"><v-icon>mdi-tag</v-icon>つけたタグ</p>
         <p v-else><v-icon>mdi-tag</v-icon>Attached Tag</p>
         <ul >
             <li v-for="(tag, i) in tagList"
