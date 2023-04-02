@@ -4,16 +4,16 @@
                 <!-- 削除の動きはあとで作る -->
                 <v-btn
                     size="small" color="error" class="global_css_haveIconButton_Margin"
-                    :loading="$store.state.globalLoading"
-                    :disabled="$store.state.globalLoading"
+                    :loading="$store.getters.getGlobalLoading"
+                    :disabled="$store.getters.getGlobalLoading"
                 >
                     <v-icon>mdi-trash-can</v-icon>
                     <p>{{messages.delete}}</p>
                 </v-btn>
                 <v-btn
                     size="small" color="#BBDEFB" class="global_css_haveIconButton_Margin"
-                    :loading="$store.state.globalLoading"
-                    :disabled="$store.state.globalLoading"
+                    :loading="$store.getters.getGlobalLoading"
+                    :disabled="$store.getters.getGlobalLoading"
                     @click="submit()"
                 >
                     <v-icon>mdi-content-save</v-icon>
@@ -46,7 +46,7 @@
                 class="global_css_input"
                 v-model="bookMarkTitle"
                 :placeholder="messages.title"
-                :disabled="$store.state.globalLoading"
+                :disabled="$store.getters.getGlobalLoading"
                 @keydown.enter.exact="this.$refs.url.focus()"
             />
 
@@ -64,7 +64,7 @@
                 class="global_css_input"
                 v-model = "bookMarkUrl"
                 :placeholder="messages.url"
-                :disabled="$store.state.globalLoading"
+                :disabled="$store.getters.getGlobalLoading"
                 @keydown.enter.exact="this.submit()"
             >
         </v-form>

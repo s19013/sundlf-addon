@@ -2,12 +2,12 @@
     <div>
         <SearchField
             ref="SearchField"
-            :lang="$store.state.lang"
+            :lang="$store.getters.getLang"
             @triggerSearch="searchBranch"
         />
         <TagList
             :tagList="checkedTagList"
-            :lang="$store.state.lang"
+            :lang="$store.getters.getLang"
             @popTag="popTag"
         />
         
@@ -34,7 +34,7 @@
                     v-model="checkedTagList"
                     :id="tag.id"
                     :value="{ id: tag.id, name: tag.name }"
-                    :disabled="$store.state.globalLoading"
+                    :disabled="$store.getters.getGlobalLoading"
                 />
                 <label :for="tag.id">{{ tag.name }}</label>
             </li>
@@ -56,7 +56,7 @@
                     class="global_css_input"
                     type="text"
                     v-model="newTag"
-                    :disabled="$store.state.globalLoading"
+                    :disabled="$store.getters.getGlobalLoading"
                     :placeholder="messages.tagName"
                 >
                 <v-btn
@@ -64,8 +64,8 @@
                     color="#BBDEFB"
                     size="small"
                     elevation="2"
-                    :disabled="$store.state.globalLoading"
-                    :loading ="$store.state.globalLoading"
+                    :disabled="$store.getters.getGlobalLoading"
+                    :loading ="$store.getters.getGlobalLoading"
                     @click.stop="createNewTag()">
                     <v-icon>mdi-content-save</v-icon>
                     <p>{{ messages.create }}</p>
@@ -248,7 +248,7 @@ export default {
     },
     mounted() {
         this.$nextTick(function () {
-            if (this.$store.state.lang == "ja"){this.messages = this.japanese}
+            if (this.$store.getters.getLang == "ja"){this.messages = this.japanese}
         })
 
         //originalCheckedTagListの中が完全に空ではなかったら代入
