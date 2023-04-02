@@ -56,8 +56,7 @@
                     class="global_css_input"
                     type="text"
                     v-model="newTag"
-                    :disabled="disableFlag"
-                    :loading ="disableFlag"
+                    :disabled="$store.state.globalLoading"
                     :placeholder="messages.tagName"
                 >
                 <v-btn
@@ -65,8 +64,8 @@
                     color="#BBDEFB"
                     size="small"
                     elevation="2"
-                    :disabled="disableFlag"
-                    :loading ="disableFlag"
+                    :disabled="$store.state.globalLoading"
+                    :loading ="$store.state.globalLoading"
                     @click.stop="createNewTag()">
                     <v-icon>mdi-content-save</v-icon>
                     <p>{{ messages.create }}</p>
@@ -145,8 +144,7 @@ export default {
     methods: {
         // 新規タグ作成
         async createNewTag() {
-            //ローディングアニメ開始
-            this.disableFlag = true
+            this.$store.commit('switchGlobalLoading')
             await axios
                 .post('/api/tag/store', { name: this.newTag })
                 .then((res) => {
@@ -162,10 +160,8 @@ export default {
                     this.createNewTagFlag = false
                     this.newTag = null
                 })
-                .catch((errors) => {
-                    this.errorMessages = errors.response.data.messages
-                })
-            this.disableFlag = false
+                .catch((errors) => {this.errorMessages = errors.response.data.messages})
+                .finally(()=> this.$store.commit('switchGlobalLoading'))
         },
         // タグ検索
         searchBranch() {
@@ -176,19 +172,15 @@ export default {
                     this.tagCacheList = this.allTagCacheList
                 }
                 // 初期ローディング､更新後の全件検索
-                else {
-                    this.searchAllTag()
-                }
+                else {this.searchAllTag()}
             }
             // 他の検索
-            else {
-                this.searchTag()
-            }
+            else {this.searchTag()}
         },
         // 全件検索
         async searchAllTag() {
             //ローディングアニメ開始
-            this.disableFlag = true
+            this.$store.commit('switchGlobalLoading')
 
             //既存チェックボックスのチェックを外す
             this.onlyCheckedFlag = false
@@ -210,12 +202,8 @@ export default {
                     this.allTagCacheList = [...this.tagSearchResultList]
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
-                .catch((err) => {
-                    console.log(err)
-                })
-
-            //ローディングアニメ解除
-            this.disableFlag = false
+                .catch((err) => {console.log(err)})
+                .finally(()=> this.$store.commit('switchGlobalLoading'))
 
             //初期ローディングフラグを切る
             this.isFirstSearchFlag = false
@@ -223,7 +211,7 @@ export default {
         // タグ検索
         async searchTag() {
             //ローディングアニメ開始
-            this.disableFlag = true
+            this.$store.commit('switchGlobalLoading')
 
             //既存チェックボックスのチェックを外す
             this.onlyCheckedFlag = false
@@ -243,12 +231,8 @@ export default {
                     //キャッシュにコピー
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
-                .catch((err) => {
-                    console.log(err)
-                })
-
-            //ローディングアニメ解除
-            this.disableFlag = false
+                .catch((err) => {console.log(err)})
+                .finally(()=> this.$store.commit('switchGlobalLoading'))
         },
         // タグ削除
         popTag(i) {this.checkedTagList.splice(i, 1)},
