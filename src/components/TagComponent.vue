@@ -2,8 +2,6 @@
     <div>
         <SearchField
             ref="SearchField"
-            :disabled="disableFlag"
-            :loadingFlag="disableFlag"
             :lang="$store.state.lang"
             @triggerSearch="searchBranch"
         />
@@ -33,9 +31,10 @@
                 <input
                     class="global_css_input"
                     type="checkbox"
-                    :id="tag.id"
                     v-model="checkedTagList"
+                    :id="tag.id"
                     :value="{ id: tag.id, name: tag.name }"
+                    :disabled="$store.state.globalLoading"
                 />
                 <label :for="tag.id">{{ tag.name }}</label>
             </li>
