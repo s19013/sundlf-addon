@@ -2,8 +2,8 @@
     <div class="searchField">
         <v-form v-on:submit.prevent ="triggerSearch()">
             <input 
-                type="search" id="search" 
-                v-model="keyword" :placeholder="lang == 'ja'? 'タグ名':'tag'"
+                type="search"
+                v-model="keyword" :placeholder="lang == 'ja'? '検索するタグ':'search tag'"
                 :loading = "loadingFlag"
                 :disabled = "loadingFlag"
             >
@@ -57,22 +57,16 @@ export default{
 
 <style scoped lang="scss">
 form{
-    display:grid;
-    grid-template-columns:5fr 1fr;
+    display: flex;
     margin-top: 10px;
     margin-bottom: 20px;
     gap:1rem;
-    #search{
-        outline:black solid 1px;
-        grid-column: 1/2;
-    }
-    .v-btn  {
-        grid-column: 2/3;
-        width:90%;
-    }
     input{
+        flex:9;
+        outline:black solid 1px;
         padding: 0.2rem;
         font-size: small;
     }
+    .v-btn  {flex:1;}
 }
 </style>
