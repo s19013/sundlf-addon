@@ -42,6 +42,7 @@ export default{
 
 <style lang="scss" scoped>
 .tagList{
+    min-height: 3.5rem;
     ul{
         display: flex;
         flex-wrap: wrap;
