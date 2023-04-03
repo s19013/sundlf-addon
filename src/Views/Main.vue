@@ -93,7 +93,13 @@ export default {
                 this.$refs.TagComponent.setCheckedTagList(res.data.checkedTagList)
             })
             .catch((errors) => {
-                
+                // 現在のタイトルとurlを設置
+                let thisBookmark = {
+                    id   :null,
+                    title:document.title,
+                    url  :location.href
+                }
+                this.$refs.BookMarkComponent.setBookMark(thisBookmark)
             })
             .finally(()=> {
                 setTimeout(()=>{this.$store.commit('switchGlobalLoading',false)}, 500);
