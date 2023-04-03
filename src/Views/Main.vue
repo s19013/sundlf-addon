@@ -71,14 +71,13 @@ export default {
                 this.$refs.TagComponent.setCheckedTagList(res.data.checkedTagList)
             })
             .catch((errors) => {})
-            .finally(()=> this.$store.commit('switchGlobalLoading',false))
+            .finally(()=> {
+                setTimeout(()=>{this.$store.commit('switchGlobalLoading',false)}, 500);
+            })
         }
     },
-    mounted() {
+    beforeMount(){
         this.isThisBookMarkAllreadyExists('https://twitter.com')
-        this.$nextTick(function () {
-            
-        })
     },
 }
 </script>
