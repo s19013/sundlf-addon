@@ -60,7 +60,7 @@ export default {
     },
     methods: {
         async login(){
-            await axios.post('api/extended/login',{
+            await axios.post('login',{
                 email:this.email,
                 password:this.password,
             })

@@ -40,7 +40,7 @@ export default {
             this.$store.commit('switchGlobalLoading')
             // 新規登録
             if(bookMarkId == null){
-                await axios.post('/api/bookmark/store',{
+                await axios.post('bookmark/store',{
                     bookMarkTitle:bookMarkTitle,
                     bookMarkUrl  :bookMarkUrl,
                     tagList      :this.$refs.TagComponent.serveCheckedTagList(),
@@ -52,7 +52,7 @@ export default {
                 .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
                 .finally(()=> this.$store.commit('switchGlobalLoading',false))
             } else {
-                await axios.put('/api/bookmark/update',{
+                await axios.put('bookmark/update',{
                 bookMarkId   :bookMarkId,
                 bookMarkTitle:bookMarkTitle,
                 bookMarkUrl  :bookMarkUrl,

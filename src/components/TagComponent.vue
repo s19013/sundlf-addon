@@ -148,7 +148,7 @@ export default {
         async createNewTag() {
             this.$store.commit('switchGlobalLoading')
             await axios
-                .post('/api/tag/store', { name: this.newTag })
+                .post('tag/store', { name: this.newTag })
                 .then((res) => {
                     //検索欄をリセット
                     this.$refs.SearchField.resetKeyword()
@@ -189,7 +189,7 @@ export default {
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
 
             await axios
-                .post('/api/tag/search', { keyword: '' })
+                .post('tag/search', { keyword: '' })
                 .then((res) => {
                     for (const tag of res.data) {
                         this.tagSearchResultList.push({
@@ -216,7 +216,7 @@ export default {
             this.tagSearchResultList = []
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
             await axios
-                .post('/api/tag/search', { keyword: this.$refs.SearchField.serveKeywordToParent() })
+                .post('tag/search', { keyword: this.$refs.SearchField.serveKeywordToParent() })
                 .then((res) => {
                     for (const tag of res.data) {
                         this.tagSearchResultList.push({
