@@ -46,7 +46,9 @@ export default {
                     tagList      :this.$refs.TagComponent.serveCheckedTagList(),
                     timezone     :Intl.DateTimeFormat().resolvedOptions().timeZone
                 })
-                .then((res)=>{console.log(res);})
+                .then(()=>{
+                    this.$refs.BookMarkComponent.showCreatedBookMarkMessage()
+                })
                 .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
                 .finally(()=> this.$store.commit('switchGlobalLoading',false))
             } else {
@@ -57,7 +59,7 @@ export default {
                 tagList      :this.$refs.TagComponent.serveCheckedTagList(),
                 timezone     :Intl.DateTimeFormat().resolvedOptions().timeZone
             })
-            .then((res)=>{console.log(res)})
+            .then(()=>{this.$refs.BookMarkComponent.showUpdatedBookMarkMessage()})
             .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
             .finally(()=> this.$store.commit('switchGlobalLoading',false))
             }
