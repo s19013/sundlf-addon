@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <Login v-if="this.$store.getIsLogined == false "/>
+        <Login v-if="this.$store.getters.getIsLogined == false "/>
         <Main v-else/>
 
         <!-- ここにログアウトボタン -->
@@ -29,7 +29,7 @@ export default {
             this.$store.commit('switchGlobalLoading')
             // axios通信
             await axios
-                .post('/api/extended/logout')
+                .get('/api/extended/logout')
                 .then((res) => {
                     // トークン削除
                     localStorage.removeItem('sundlfAddonToken')
