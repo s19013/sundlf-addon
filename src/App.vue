@@ -41,7 +41,6 @@ export default {
     },
     mounted() {
         if ((window.navigator.language).substring(0,2) == "ja") {this.$store.commit('setLang', "ja")}
-        console.log(localStorage.getItem('sundlfAddonToken'));
         if (localStorage.getItem('sundlfAddonToken') != null) {
             this.$store.commit('setIsLogined',true)
         }
