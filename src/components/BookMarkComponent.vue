@@ -1,5 +1,8 @@
 <template>
     <div>
+        <p>{{bookMarkId   }}</p>
+        <p>{{bookMarkTitle}}</p>
+        <p>{{bookMarkUrl  }}</p>
         <div class="head">
                 <!-- 削除の動きはあとで作る -->
                 <v-btn
@@ -142,6 +145,17 @@ export default {
                 bookMarkTitle:this.bookMarkTitle,
                 bookMarkUrl  :this.bookMarkUrl,
             })
+        },
+        async getBookmarkId(){
+            // 新規追加した時に更新用にidをとって来ないと行けない
+            await axios.post('bookmark/id',{
+                bookMarkUrl  :this.bookMarkUrl,
+            })
+            .then((res) => {
+                console.log(res);
+                this.bookMarkId = res.data.bookMarkId
+            })
+            .catch(() => {})
         },
         deleteBookMark() {this.$emit('triggerDeleteBookMark')},
         // エラーを配置
