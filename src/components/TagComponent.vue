@@ -49,6 +49,8 @@
                 {{message}}
             </p>
 
+            <p class="global_css_success" v-show="createdTagFlag">{{ messages.createdTag }}</p>
+
             <v-form v-on:submit.prevent ="createNewTag">
                 <input
                     class="global_css_input"
@@ -94,6 +96,7 @@ export default {
                 checked: 'チェックを付けたタグだけを表示',
                 uncheck: 'チェックをすべてはずす',
                 make: '新規作成',
+                createdTag:"タグを作成しました",
                 tagName: 'タグ名',
                 create: '作成'
             },
@@ -104,15 +107,17 @@ export default {
                 checked: 'Show only checked tags',
                 uncheck: 'uncheck all',
                 make: 'Create New',
+                createdTag:"created tag",
                 tagName: 'tag name',
                 create: 'create'
             },
             newTag: '',
 
             // flag
-            createNewTagFlag: false,
             tagDialogFlag: false,
             isFirstSearchFlag: true,
+
+            createdTagFlag:false,
 
             //loding
             disableFlag: false,
@@ -153,9 +158,9 @@ export default {
                     this.isFirstSearchFlag = true
                     this.searchAllTag()
 
-                    // 入力欄を消す
-                    this.createNewTagFlag = false
                     this.newTag = null
+
+                    this.showCreatedTagMessage()
                 })
                 .catch((errors) => {this.errorMessages = errors.response.data.messages})
                 .finally(()=> this.$store.commit('switchGlobalLoading',false))
@@ -231,6 +236,10 @@ export default {
         resetError() {this.errorMessages = { name: [] }},
         //親にチェックリストを渡す
         serveCheckedTagList(){return makeListTools.tagIdList(this.checkedTagList)},
+        showCreatedTagMessage(){
+            this.createdTagFlag = true
+            setTimeout(()=>{this.createdTagFlag = false}, 3000);
+        },
     },
     watch:{
         checkedTagList:function(){

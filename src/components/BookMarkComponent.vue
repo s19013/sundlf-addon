@@ -30,6 +30,9 @@
             {{message}}
         </p>
 
+        <p class="global_css_success" v-show="createdBookMarkFlag"> {{ messages.createdBookMark }}</p>
+        <p class="global_css_success" v-show="updatedBookMarkFlag"> {{ messages.updatedBookMark }}</p>
+
         <v-form @submit.prevent>
             <!-- タイトル入力欄とボタン2つ -->
             <p
@@ -82,6 +85,8 @@ export default {
             title:"タイトル",
             url:"url [必須]",
             otherError:"サーバー側でエラーが発生しました｡数秒待って再度送信してください",
+            createdBookMark:"ブックマークを作成しました",
+            updatedBookMark:"ブックマークを更新しました",
         },
         messages:{
             save:'save',
@@ -89,10 +94,15 @@ export default {
             title:"title",
             url:"url [required]",
             otherError:"An error occurred on the server side, please wait a few seconds and try again",
+            createdBookMark:"created bookmark",
+            updatedBookMark:"updated bookmark",
         },
         bookMarkId    :this.originalBookMark.id,
         bookMarkTitle :this.originalBookMark.title,
         bookMarkUrl   :this.originalBookMark.url,
+
+        createdBookMarkFlag:false,
+        updatedBookMarkFlag:false,
 
         // 初期の読み込みで空配列などが無いとエラーを吐かれる
         errorMessages:{
@@ -143,6 +153,14 @@ export default {
                 }
             }
             else { this.errorMessages = errors.data.messages }
+        },
+        showCreatedBookMarkMessage(){
+            this.createdBookMarkFlag = true
+            setTimeout(()=>{this.createdBookMarkFlag = false}, 3000);
+        },
+        showUpdatedBookMarkMessage(){
+            this.updatedBookMarkFlag = true
+            setTimeout(()=>{this.updatedBookMarkFlag = false}, 3000);
         },
     },
     mounted() {
