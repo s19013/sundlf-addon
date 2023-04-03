@@ -34,7 +34,7 @@
             size="small" color="#BBDEFB"
             :loading="localLoading"
             :disabled="localLoading"
-            @click="submit()"
+            @click="login()"
         >
             <p>{{$store.getters.getLang == 'ja'? 'ログイン':'Log in'}}</p>
         </v-btn>
@@ -52,7 +52,7 @@ export default {
         }
     },
     methods: {
-        async submit(){
+        async login(){
             await axios.post('api/extended/login',{
                 email:this.email,
                 password:this.password,
