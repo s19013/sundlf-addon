@@ -1,8 +1,5 @@
 <template>
     <div>
-        <p>{{bookMarkId   }}</p>
-        <p>{{bookMarkTitle}}</p>
-        <p>{{bookMarkUrl  }}</p>
         <div class="head">
                 <!-- 削除の動きはあとで作る -->
                 <v-btn
