@@ -125,7 +125,8 @@ export default {
 
             // tagList
             checkedTagList: [],
-            tagSearchResultList: [{id:1,name:"aaa"},{id:2,name:"bbb"},{id:3,name:"ccc"},{id:4,name:"ddd"},{id:5,name:"eee"},{id:6,name:"fff"},{id:7,name:"ggg"},{id:8,name:"hhh"}],
+            // tagSearchResultList: [{id:1,name:"aaa"},{id:2,name:"bbb"},{id:3,name:"ccc"},{id:4,name:"ddd"},{id:5,name:"eee"},{id:6,name:"fff"},{id:7,name:"ggg"},{id:8,name:"hhh"}],
+            tagSearchResultList: [],
             tagCacheList: [], //全件検索のキャッシュ
             allTagCacheList: [] //全件検索のキャッシュ
         }
@@ -161,7 +162,7 @@ export default {
                     this.newTag = null
                 })
                 .catch((errors) => {this.errorMessages = errors.response.data.messages})
-                .finally(()=> this.$store.commit('switchGlobalLoading'))
+                .finally(()=> this.$store.commit('switchGlobalLoading',false))
         },
         // タグ検索
         searchBranch() {
@@ -203,7 +204,7 @@ export default {
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
                 .catch((err) => {console.log(err)})
-                .finally(()=> this.$store.commit('switchGlobalLoading'))
+                .finally(()=> this.$store.commit('switchGlobalLoading',false))
 
             //初期ローディングフラグを切る
             this.isFirstSearchFlag = false
@@ -232,7 +233,7 @@ export default {
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
                 .catch((err) => {console.log(err)})
-                .finally(()=> this.$store.commit('switchGlobalLoading'))
+                .finally(()=> this.$store.commit('switchGlobalLoading',false))
         },
         // タグ削除
         popTag(i) {this.checkedTagList.splice(i, 1)},
@@ -262,6 +263,8 @@ export default {
 
             this.checkedTagList = originalCheckedTagList_copy
         }
+
+        // this.searchAllTag()
     }
 }
 </script>

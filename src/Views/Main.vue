@@ -11,7 +11,7 @@
         />
         <TagComponent
             ref="TagComponent"
-            :originalCheckedTagList="[{id:1,name:'aaa'},{id:2,name:'bbb'},{id:3,name:'ccc'},{id:4,name:'ddd'},{id:5,name:'eee'},{id:6,name:'fff'},{id:7,name:'ggg'},{id:8,name:'hhh'}]"
+            :originalCheckedTagList="[]"
         />
 
     </div>
@@ -48,7 +48,7 @@ export default {
                 })
                 .then((res)=>{console.log(res);})
                 .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
-                .finally(()=> this.$store.commit('switchGlobalLoading'))
+                .finally(()=> this.$store.commit('switchGlobalLoading',false))
             } else {
                 await axios.put('/api/bookmark/update',{
                 bookMarkId   :bookMarkId,
@@ -59,7 +59,7 @@ export default {
             })
             .then((res)=>{console.log(res)})
             .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
-            .finally(()=> this.$store.commit('switchGlobalLoading'))
+            .finally(()=> this.$store.commit('switchGlobalLoading',false))
             }
         },
     },
