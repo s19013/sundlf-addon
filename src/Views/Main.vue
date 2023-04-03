@@ -4,9 +4,9 @@
             ref="BookMarkComponent"
             @triggerSubmit="submit"
             :originalBookMark="{
-                id:1,
-                title:'test',
-                url:'http://google.com'
+                id   :propsBookmarkId,
+                title:propsBookmarkTitle,
+                url  :propsBookmarkUrl
             }"
         />
         <TagComponent
@@ -23,7 +23,9 @@ import BookMarkComponent from '@/components/BookMarkComponent.vue'
 export default {
     data() {
         return {
-            
+            propsBookmarkId:null,
+            propsBookmarkTitle:null,
+            propsBookmarkUrl:null,
         }
     },
     components:{
@@ -47,6 +49,7 @@ export default {
                     timezone     :Intl.DateTimeFormat().resolvedOptions().timeZone
                 })
                 .then(()=>{
+                    this.$refs.BookMarkComponent.getBookmarkId()
                     this.$refs.BookMarkComponent.showCreatedBookMarkMessage()
                 })
                 .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
