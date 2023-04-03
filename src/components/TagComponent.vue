@@ -16,15 +16,13 @@
         <v-progress-circular
             :size=100
             color="primary"
-            v-show="disableFlag"
+            v-show="$store.getters.getGlobalLoading == true"
             indeterminate
         ></v-progress-circular>
 
         <!-- タグ一覧 -->
         <ul
-            class="overflow-y-auto"
             width="100%"
-            v-show="!disableFlag"
             max-height="1vh"
         >
             <li v-for="tag of tagSearchResultList" :key="tag.id">
@@ -264,24 +262,25 @@ export default {
             this.checkedTagList = originalCheckedTagList_copy
         }
 
-        // this.searchAllTag()
+        this.searchAllTag()
     }
 }
 </script>
 
 <style scoped lang="scss">
-label {
-    margin-left: 0.5rem;
-    width: 100%;
+ul{
+    overflow-y: auto;
+    max-height: 50vh;
+    outline:black solid 1px;
+    padding:0.5rem;
+    li{display: block;}
+    label {
+        margin-left: 0.5rem;
+        width: 100%;
+    }
 }
 .v-progress-circular {
     margin: auto;
-}
-.v-list {
-    padding: 0;
-    .v-list-item {
-        padding: 0 0.5rem;
-    }
 }
 .areaCreateNewTag {
     margin: 1rem 0 0.5rem 0;
