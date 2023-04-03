@@ -1,6 +1,13 @@
 <template>
     <div>
         <p
+            v-if="errorMessages.other != null"
+            class ="global_css_error"
+        >
+            <v-icon>mdi-alert-circle-outline</v-icon>
+            {{errorMessages.other}}
+        </p>
+        <p
             v-show="errorMessages.email.length>0"
             v-for ="message of errorMessages.email" :key="message"
             class ="global_css_error"
@@ -48,7 +55,7 @@ export default {
             localLoading:false,
             email:null,
             password:null,
-            errorMessages: { email:[],password:[] },
+            errorMessages: { email:[],password:[],other:null },
         }
     },
     methods: {
@@ -58,14 +65,16 @@ export default {
                 password:this.password,
             })
             .then((res) => {
-                console.log(res.data);
-                this.$store.commit('setToken',res.data.token)
+                console.log(res);
+                localStorage.setItem('sundlfAddonToken', res.data.token)
+                this.$store.commit('setIsLogined',true)
             })
             .catch((res) => {
-                console.log(res.response.data.messages);
+                console.log(res.response);
                 let messages = res.response.data.messages
                 this.errorMessages.email = messages.email
                 this.errorMessages.password = messages.password
+                this.errorMessages.other = messages.other
             })
         }
     },
