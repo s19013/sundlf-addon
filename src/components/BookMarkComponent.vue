@@ -100,9 +100,9 @@ export default {
             createdBookMark:"created bookmark",
             updatedBookMark:"updated bookmark",
         },
-        bookMarkId    :this.originalBookMark.id,
-        bookMarkTitle :this.originalBookMark.title,
-        bookMarkUrl   :this.originalBookMark.url,
+        bookMarkId    :null,
+        bookMarkTitle :null,
+        bookMarkUrl   :null,
 
         createdBookMarkFlag:false,
         updatedBookMarkFlag:false,
@@ -127,14 +127,6 @@ export default {
         pageTitle:{
             type   :String,
             default:''
-        },
-        originalBookMark:{
-            type   :Object,
-            default:() => ({
-                id:null,
-                title:'',
-                url  :''
-            })
         },
     },
     methods: {
@@ -167,6 +159,12 @@ export default {
                 }
             }
             else { this.errorMessages = errors.data.messages }
+        },
+        // 親から値を受け取る
+        setBookMark(bookMark){
+            this.bookMarkId = bookMark.id
+            this.bookMarkTitle = bookMark.title
+            this.bookMarkUrl = bookMark.url
         },
         showCreatedBookMarkMessage(){
             this.createdBookMarkFlag = true

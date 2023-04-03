@@ -133,11 +133,6 @@ export default {
         }
     },
     props:{
-        originalCheckedTagList:{
-            //更新や閲覧画面で既にチェックがついているタグを受け取るため
-            type   :Array,
-            default:() => ([]),
-        },
     },
     components: {
         SearchField,
@@ -240,6 +235,8 @@ export default {
             this.createdTagFlag = true
             setTimeout(()=>{this.createdTagFlag = false}, 3000);
         },
+        // 親から値を受け取る
+        setCheckedTagList(list){this.checkedTagList = list},
     },
     watch:{
         checkedTagList:function(){
@@ -250,18 +247,6 @@ export default {
         this.$nextTick(function () {
             if (this.$store.getters.getLang == "ja"){this.messages = this.japanese}
         })
-
-        //originalCheckedTagListの中が完全に空ではなかったら代入
-        if (this.originalCheckedTagList.length != 0 ) {
-            const originalCheckedTagListLength = this.originalCheckedTagList.length //forで毎度計算されるのを防ぐ
-            // idがnullのデータ(ユーザーがget通信でurlを変にいじったら起きる)の時の処理
-            let originalCheckedTagList_copy = this.originalCheckedTagList
-            for (let index = 0; index < originalCheckedTagListLength; index++) {
-                if(this.originalCheckedTagList[index].id == null){originalCheckedTagList_copy.splice(index) }
-            }
-
-            this.checkedTagList = originalCheckedTagList_copy
-        }
 
         this.searchAllTag()
     }
