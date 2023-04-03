@@ -3,17 +3,17 @@
         <v-form v-on:submit.prevent ="triggerSearch()">
             <input 
                 type="search"
-                v-model="keyword" :placeholder="lang == 'ja'? '検索するタグ':'search tag'"
-                :disabled = "$store.state.globalLoading"
+                v-model="keyword" :placeholder="$store.getters.getLang == 'ja'? '検索するタグ':'search tag'"
+                :disabled = "$store.getters.getGlobalLoading"
             >
             <v-btn color="submit"
                 class="global_css_haveIconButton_Margin"
                 elevation="2"
                 size="small"
-                :disabled = "$store.state.globalLoading"
+                :disabled = "$store.getters.getGlobalLoading"
                 @click.stop="triggerSearch()">
                 <v-icon>mdi-magnify</v-icon>
-                <p v-if="lang == 'ja'">検索</p>
+                <p v-if="$store.getters.getLang == 'ja'">検索</p>
                 <p v-else>search</p>
             </v-btn>
         </v-form>
@@ -33,10 +33,6 @@ export default{
             type:String,
             default:""
         },
-        lang:{
-            type:String,
-            default:"ja"
-        }
     },
     methods: {
         triggerSearch(){this.$emit('triggerSearch')},

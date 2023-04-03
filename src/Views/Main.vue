@@ -11,7 +11,7 @@
         />
         <TagComponent
             ref="TagComponent"
-            :originalCheckedTagList="[{id:1,name:'aaa'},{id:2,name:'bbb'},{id:3,name:'ccc'},{id:4,name:'ddd'},{id:5,name:'eee'},{id:6,name:'fff'},{id:7,name:'ggg'},{id:8,name:'hhh'}]"
+            :originalCheckedTagList="[]"
         />
 
     </div>
@@ -40,8 +40,6 @@ export default {
             this.$store.commit('switchGlobalLoading')
             // 新規登録
             if(bookMarkId == null){
-                console.log(bookMarkId,bookMarkTitle,bookMarkUrl);
-                console.log(this.$refs.TagComponent.serveCheckedTagList());
                 await axios.post('/api/bookmark/store',{
                     bookMarkTitle:bookMarkTitle,
                     bookMarkUrl  :bookMarkUrl,
@@ -50,10 +48,8 @@ export default {
                 })
                 .then((res)=>{console.log(res);})
                 .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
-                .finally(()=> this.$store.commit('switchGlobalLoading'))
+                .finally(()=> this.$store.commit('switchGlobalLoading',false))
             } else {
-                console.log(bookMarkId,bookMarkTitle,bookMarkUrl);
-                console.log(this.$refs.TagComponent.serveCheckedTagList());
                 await axios.put('/api/bookmark/update',{
                 bookMarkId   :bookMarkId,
                 bookMarkTitle:bookMarkTitle,
@@ -63,7 +59,7 @@ export default {
             })
             .then((res)=>{console.log(res)})
             .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
-            .finally(()=> this.$store.commit('switchGlobalLoading'))
+            .finally(()=> this.$store.commit('switchGlobalLoading',false))
             }
         },
     },

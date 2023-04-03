@@ -3,19 +3,22 @@ import { createStore } from 'vuex'
 export default createStore({
 	state: {
         lang:"en",
-        token:null,
         globalLoading:false,
 	},
-    getters:{},
+    getters:{
+        getLang(state){return state.lang},
+        getGlobalLoading(state){return state.globalLoading},
+    },
 	mutations: {
         setLang(state,lang){
             state.lang = lang
         },
         setToken(state,token){
-            state.token = token
+            localStorage.setItem('sundlfAddonToken', token);
         },
-        switchGlobalLoading(state){
-            state.globalLoading = !state.globalLoading
+        switchGlobalLoading(state,status=null){
+            if (status == null) {state.globalLoading = !state.globalLoading}
+            else {state.globalLoading = status}
         },
     },
     actions: {

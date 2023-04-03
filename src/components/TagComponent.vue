@@ -2,12 +2,12 @@
     <div>
         <SearchField
             ref="SearchField"
-            :lang="$store.state.lang"
+            :lang="$store.getters.getLang"
             @triggerSearch="searchBranch"
         />
         <TagList
             :tagList="checkedTagList"
-            :lang="$store.state.lang"
+            :lang="$store.getters.getLang"
             @popTag="popTag"
         />
         
@@ -34,7 +34,7 @@
                     v-model="checkedTagList"
                     :id="tag.id"
                     :value="{ id: tag.id, name: tag.name }"
-                    :disabled="$store.state.globalLoading"
+                    :disabled="$store.getters.getGlobalLoading"
                 />
                 <label :for="tag.id">{{ tag.name }}</label>
             </li>
@@ -56,7 +56,7 @@
                     class="global_css_input"
                     type="text"
                     v-model="newTag"
-                    :disabled="$store.state.globalLoading"
+                    :disabled="$store.getters.getGlobalLoading"
                     :placeholder="messages.tagName"
                 >
                 <v-btn
@@ -64,8 +64,8 @@
                     color="#BBDEFB"
                     size="small"
                     elevation="2"
-                    :disabled="$store.state.globalLoading"
-                    :loading ="$store.state.globalLoading"
+                    :disabled="$store.getters.getGlobalLoading"
+                    :loading ="$store.getters.getGlobalLoading"
                     @click.stop="createNewTag()">
                     <v-icon>mdi-content-save</v-icon>
                     <p>{{ messages.create }}</p>
@@ -125,7 +125,8 @@ export default {
 
             // tagList
             checkedTagList: [],
-            tagSearchResultList: [{id:1,name:"aaa"},{id:2,name:"bbb"},{id:3,name:"ccc"},{id:4,name:"ddd"},{id:5,name:"eee"},{id:6,name:"fff"},{id:7,name:"ggg"},{id:8,name:"hhh"}],
+            // tagSearchResultList: [{id:1,name:"aaa"},{id:2,name:"bbb"},{id:3,name:"ccc"},{id:4,name:"ddd"},{id:5,name:"eee"},{id:6,name:"fff"},{id:7,name:"ggg"},{id:8,name:"hhh"}],
+            tagSearchResultList: [],
             tagCacheList: [], //全件検索のキャッシュ
             allTagCacheList: [] //全件検索のキャッシュ
         }
@@ -161,7 +162,7 @@ export default {
                     this.newTag = null
                 })
                 .catch((errors) => {this.errorMessages = errors.response.data.messages})
-                .finally(()=> this.$store.commit('switchGlobalLoading'))
+                .finally(()=> this.$store.commit('switchGlobalLoading',false))
         },
         // タグ検索
         searchBranch() {
@@ -203,7 +204,7 @@ export default {
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
                 .catch((err) => {console.log(err)})
-                .finally(()=> this.$store.commit('switchGlobalLoading'))
+                .finally(()=> this.$store.commit('switchGlobalLoading',false))
 
             //初期ローディングフラグを切る
             this.isFirstSearchFlag = false
@@ -232,7 +233,7 @@ export default {
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
                 .catch((err) => {console.log(err)})
-                .finally(()=> this.$store.commit('switchGlobalLoading'))
+                .finally(()=> this.$store.commit('switchGlobalLoading',false))
         },
         // タグ削除
         popTag(i) {this.checkedTagList.splice(i, 1)},
@@ -248,7 +249,7 @@ export default {
     },
     mounted() {
         this.$nextTick(function () {
-            if (this.$store.state.lang == "ja"){this.messages = this.japanese}
+            if (this.$store.getters.getLang == "ja"){this.messages = this.japanese}
         })
 
         //originalCheckedTagListの中が完全に空ではなかったら代入
@@ -262,6 +263,8 @@ export default {
 
             this.checkedTagList = originalCheckedTagList_copy
         }
+
+        // this.searchAllTag()
     }
 }
 </script>

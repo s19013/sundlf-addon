@@ -1,6 +1,6 @@
 <template>
     <div class="tagList">
-        <p v-if="lang == 'ja'"><v-icon>mdi-tag</v-icon>つけたタグ</p>
+        <p v-if="$store.getters.getLang == 'ja'"><v-icon>mdi-tag</v-icon>つけたタグ</p>
         <p v-else><v-icon>mdi-tag</v-icon>Attached Tag</p>
         <ul >
             <li v-for="(tag, i) in tagList"
@@ -9,7 +9,7 @@
                 <v-chip
                     size="x-small"
                     closable
-                    :disabled="$store.state.globalLoading"
+                    :disabled="$store.getters.getGlobalLoading"
                     @click:close="popTag(i)"
                 >
                     {{ tag.name }}
