@@ -29,7 +29,7 @@ export default {
             this.$store.commit('switchGlobalLoading')
             // axios通信
             await axios
-                .get('/api/extended/logout')
+                .get('logout')
                 .then((res) => {
                     // トークン削除
                     localStorage.removeItem('sundlfAddonToken')
