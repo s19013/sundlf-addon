@@ -16,8 +16,9 @@ export default createStore({
         setToken(state,token){
             localStorage.setItem('sundlfAddonToken', token);
         },
-        switchGlobalLoading(state){
-            state.globalLoading = !state.globalLoading
+        switchGlobalLoading(state,status=null){
+            if (status == null) {state.globalLoading = !state.globalLoading}
+            else {state.globalLoading = status}
         },
     },
     actions: {
