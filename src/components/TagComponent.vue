@@ -16,7 +16,7 @@
         <v-progress-circular
             :size=100
             color="primary"
-            v-show="$store.getters.getGlobalLoading == true"
+            v-show="$store.getters.getGlobalLoading == true || disableFlag == true"
             indeterminate
         ></v-progress-circular>
 
@@ -32,7 +32,7 @@
                     v-model="checkedTagList"
                     :id="tag.id"
                     :value="{ id: tag.id, name: tag.name }"
-                    :disabled="$store.getters.getGlobalLoading"
+                    :disabled="$store.getters.getGlobalLoading || disableFlag == true"
                 />
                 <label :for="tag.id">{{ tag.name }}</label>
             </li>
@@ -56,7 +56,7 @@
                     class="global_css_input"
                     type="text"
                     v-model="newTag"
-                    :disabled="$store.getters.getGlobalLoading"
+                    :disabled="$store.getters.getGlobalLoading || disableFlag == true"
                     :placeholder="messages.tagName"
                 >
                 <v-btn
@@ -64,8 +64,8 @@
                     color="#BBDEFB"
                     size="small"
                     elevation="2"
-                    :disabled="$store.getters.getGlobalLoading"
-                    :loading ="$store.getters.getGlobalLoading"
+                    :disabled="$store.getters.getGlobalLoading || disableFlag == true"
+                    :loading ="$store.getters.getGlobalLoading || disableFlag == true"
                     @click.stop="createNewTag()">
                     <v-icon>mdi-content-save</v-icon>
                     <p>{{ messages.create }}</p>
@@ -141,7 +141,7 @@ export default {
     methods: {
         // 新規タグ作成
         async createNewTag() {
-            this.$store.commit('switchGlobalLoading')
+            this.disableFlag = true
             await axios
                 .post('tag/store', { name: this.newTag })
                 .then((res) => {
@@ -158,7 +158,7 @@ export default {
                     this.showCreatedTagMessage()
                 })
                 .catch((errors) => {this.errorMessages = errors.response.data.messages})
-                .finally(()=> this.$store.commit('switchGlobalLoading',false))
+                .finally(()=> this.disableFlag = false)
         },
         // タグ検索
         searchBranch() {
@@ -176,9 +176,6 @@ export default {
         },
         // 全件検索
         async searchAllTag() {
-            //ローディングアニメ開始
-            this.$store.commit('switchGlobalLoading')
-
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
@@ -197,15 +194,13 @@ export default {
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
                 .catch((err) => {console.log(err)})
-                .finally(()=> this.$store.commit('switchGlobalLoading',false))
-
             //初期ローディングフラグを切る
             this.isFirstSearchFlag = false
         },
         // タグ検索
         async searchTag() {
             //ローディングアニメ開始
-            this.$store.commit('switchGlobalLoading')
+            this.disableFlag = false
 
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
@@ -223,7 +218,7 @@ export default {
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
                 .catch((err) => {console.log(err)})
-                .finally(()=> this.$store.commit('switchGlobalLoading',false))
+                .finally(()=> this.disableFlag = false)
         },
         // タグ削除
         popTag(i) {this.checkedTagList.splice(i, 1)},
