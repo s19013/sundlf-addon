@@ -110,7 +110,6 @@ export default {
             newTag: '',
 
             // flag
-            onlyCheckedFlag: false,
             createNewTagFlag: false,
             tagDialogFlag: false,
             isFirstSearchFlag: true,
@@ -180,9 +179,6 @@ export default {
             //ローディングアニメ開始
             this.$store.commit('switchGlobalLoading')
 
-            //既存チェックボックスのチェックを外す
-            this.onlyCheckedFlag = false
-
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
@@ -210,9 +206,6 @@ export default {
         async searchTag() {
             //ローディングアニメ開始
             this.$store.commit('switchGlobalLoading')
-
-            //既存チェックボックスのチェックを外す
-            this.onlyCheckedFlag = false
 
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
