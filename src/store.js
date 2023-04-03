@@ -13,9 +13,6 @@ export default createStore({
         setLang(state,lang){
             state.lang = lang
         },
-        setToken(state,token){
-            localStorage.setItem('sundlfAddonToken', token);
-        },
         switchGlobalLoading(state,status=null){
             if (status == null) {state.globalLoading = !state.globalLoading}
             else {state.globalLoading = status}
