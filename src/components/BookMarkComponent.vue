@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="head">
-                <!-- 削除の動きはあとで作る -->
                 <v-btn
                     size="small" color="error" class="global_css_haveIconButton_Margin"
                     :loading="$store.getters.getGlobalLoading"
-                    :disabled="$store.getters.getGlobalLoading"
+                    :disabled="$store.getters.getGlobalLoading || bookMarkId == null"
+                    @click="deleteBookMark()"
                 >
                     <v-icon>mdi-trash-can</v-icon>
                     <p>{{messages.delete}}</p>
@@ -146,10 +146,14 @@ export default {
             })
             .catch(() => {})
         },
-        deleteBookMark() {this.$emit('triggerDeleteBookMark')},
+        deleteBookMark() {this.$emit('triggerDeleteBookMark',this.bookMarkId)},
+        resetBookMark(){
+            this.bookMarkId    = null
+            this.bookMarkTitle = null
+            this.bookMarkUrl   = null
+        },
         // エラーを配置
         setErrors(errors){
-            console.log(errors);
             if (String(errors.status)[0] == 5) {
                 this.errorMessages = {
                     "others" : [this.messages.otherError]
