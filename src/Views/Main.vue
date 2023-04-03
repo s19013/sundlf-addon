@@ -3,15 +3,9 @@
         <BookMarkComponent
             ref="BookMarkComponent"
             @triggerSubmit="submit"
-            :originalBookMark="{
-                id   :propsBookmarkId,
-                title:propsBookmarkTitle,
-                url  :propsBookmarkUrl
-            }"
         />
         <TagComponent
             ref="TagComponent"
-            :originalCheckedTagList="[]"
         />
 
     </div>
@@ -23,9 +17,6 @@ import BookMarkComponent from '@/components/BookMarkComponent.vue'
 export default {
     data() {
         return {
-            propsBookmarkId:null,
-            propsBookmarkTitle:null,
-            propsBookmarkUrl:null,
         }
     },
     components:{
@@ -67,6 +58,26 @@ export default {
             .finally(()=> this.$store.commit('switchGlobalLoading',false))
             }
         },
+        async isThisBookMarkAllreadyExists(url){
+            // とりあえず今は適当なブクマ取ってきて実験して見る
+            this.$store.commit('switchGlobalLoading')
+            await axios.post('bookmark/data',{
+                bookMarkUrl  :url,
+            })
+            .then((res)=>{
+                // propsに設置
+                console.log(res.data);
+                this.$refs.BookMarkComponent.setBookMark(res.data.bookmark)
+                this.$refs.TagComponent.setCheckedTagList(res.data.checkedTagList)
+            })
+            .catch((errors) => {})
+            .finally(()=> {
+                setTimeout(()=>{this.$store.commit('switchGlobalLoading',false)}, 500);
+            })
+        }
+    },
+    beforeMount(){
+        this.isThisBookMarkAllreadyExists('https://twitter.com')
     },
 }
 </script>
