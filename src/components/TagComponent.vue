@@ -16,15 +16,13 @@
         <v-progress-circular
             :size=100
             color="primary"
-            v-show="disableFlag"
+            v-show="$store.getters.getGlobalLoading == true"
             indeterminate
         ></v-progress-circular>
 
         <!-- タグ一覧 -->
         <ul
-            class="overflow-y-auto"
             width="100%"
-            v-show="!disableFlag"
             max-height="1vh"
         >
             <li v-for="tag of tagSearchResultList" :key="tag.id">
@@ -50,6 +48,8 @@
                 <v-icon>mdi-alert-circle-outline</v-icon>
                 {{message}}
             </p>
+
+            <p class="global_css_success" v-show="createdTagFlag">{{ messages.createdTag }}</p>
 
             <v-form v-on:submit.prevent ="createNewTag">
                 <input
@@ -96,6 +96,7 @@ export default {
                 checked: 'チェックを付けたタグだけを表示',
                 uncheck: 'チェックをすべてはずす',
                 make: '新規作成',
+                createdTag:"タグを作成しました",
                 tagName: 'タグ名',
                 create: '作成'
             },
@@ -106,16 +107,17 @@ export default {
                 checked: 'Show only checked tags',
                 uncheck: 'uncheck all',
                 make: 'Create New',
+                createdTag:"created tag",
                 tagName: 'tag name',
                 create: 'create'
             },
             newTag: '',
 
             // flag
-            onlyCheckedFlag: false,
-            createNewTagFlag: false,
             tagDialogFlag: false,
             isFirstSearchFlag: true,
+
+            createdTagFlag:false,
 
             //loding
             disableFlag: false,
@@ -125,7 +127,6 @@ export default {
 
             // tagList
             checkedTagList: [],
-            // tagSearchResultList: [{id:1,name:"aaa"},{id:2,name:"bbb"},{id:3,name:"ccc"},{id:4,name:"ddd"},{id:5,name:"eee"},{id:6,name:"fff"},{id:7,name:"ggg"},{id:8,name:"hhh"}],
             tagSearchResultList: [],
             tagCacheList: [], //全件検索のキャッシュ
             allTagCacheList: [] //全件検索のキャッシュ
@@ -147,7 +148,7 @@ export default {
         async createNewTag() {
             this.$store.commit('switchGlobalLoading')
             await axios
-                .post('/api/tag/store', { name: this.newTag })
+                .post('tag/store', { name: this.newTag })
                 .then((res) => {
                     //検索欄をリセット
                     this.$refs.SearchField.resetKeyword()
@@ -157,9 +158,9 @@ export default {
                     this.isFirstSearchFlag = true
                     this.searchAllTag()
 
-                    // 入力欄を消す
-                    this.createNewTagFlag = false
                     this.newTag = null
+
+                    this.showCreatedTagMessage()
                 })
                 .catch((errors) => {this.errorMessages = errors.response.data.messages})
                 .finally(()=> this.$store.commit('switchGlobalLoading',false))
@@ -183,15 +184,12 @@ export default {
             //ローディングアニメ開始
             this.$store.commit('switchGlobalLoading')
 
-            //既存チェックボックスのチェックを外す
-            this.onlyCheckedFlag = false
-
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
 
             await axios
-                .post('/api/tag/search', { keyword: '' })
+                .post('tag/search', { keyword: '' })
                 .then((res) => {
                     for (const tag of res.data) {
                         this.tagSearchResultList.push({
@@ -214,14 +212,11 @@ export default {
             //ローディングアニメ開始
             this.$store.commit('switchGlobalLoading')
 
-            //既存チェックボックスのチェックを外す
-            this.onlyCheckedFlag = false
-
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
             await axios
-                .post('/api/tag/search', { keyword: this.$refs.SearchField.serveKeywordToParent() })
+                .post('tag/search', { keyword: this.$refs.SearchField.serveKeywordToParent() })
                 .then((res) => {
                     for (const tag of res.data) {
                         this.tagSearchResultList.push({
@@ -241,6 +236,10 @@ export default {
         resetError() {this.errorMessages = { name: [] }},
         //親にチェックリストを渡す
         serveCheckedTagList(){return makeListTools.tagIdList(this.checkedTagList)},
+        showCreatedTagMessage(){
+            this.createdTagFlag = true
+            setTimeout(()=>{this.createdTagFlag = false}, 3000);
+        },
     },
     watch:{
         checkedTagList:function(){
@@ -264,24 +263,25 @@ export default {
             this.checkedTagList = originalCheckedTagList_copy
         }
 
-        // this.searchAllTag()
+        this.searchAllTag()
     }
 }
 </script>
 
 <style scoped lang="scss">
-label {
-    margin-left: 0.5rem;
-    width: 100%;
+ul{
+    overflow-y: auto;
+    max-height: 50vh;
+    outline:black solid 1px;
+    padding:0.5rem;
+    li{display: block;}
+    label {
+        margin-left: 0.5rem;
+        width: 100%;
+    }
 }
 .v-progress-circular {
     margin: auto;
-}
-.v-list {
-    padding: 0;
-    .v-list-item {
-        padding: 0 0.5rem;
-    }
 }
 .areaCreateNewTag {
     margin: 1rem 0 0.5rem 0;

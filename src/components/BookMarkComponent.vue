@@ -1,5 +1,8 @@
 <template>
     <div>
+        <p>{{bookMarkId   }}</p>
+        <p>{{bookMarkTitle}}</p>
+        <p>{{bookMarkUrl  }}</p>
         <div class="head">
                 <!-- 削除の動きはあとで作る -->
                 <v-btn
@@ -29,6 +32,9 @@
             <v-icon>mdi-alert-circle-outline</v-icon>
             {{message}}
         </p>
+
+        <p class="global_css_success" v-show="createdBookMarkFlag"> {{ messages.createdBookMark }}</p>
+        <p class="global_css_success" v-show="updatedBookMarkFlag"> {{ messages.updatedBookMark }}</p>
 
         <v-form @submit.prevent>
             <!-- タイトル入力欄とボタン2つ -->
@@ -82,6 +88,8 @@ export default {
             title:"タイトル",
             url:"url [必須]",
             otherError:"サーバー側でエラーが発生しました｡数秒待って再度送信してください",
+            createdBookMark:"ブックマークを作成しました",
+            updatedBookMark:"ブックマークを更新しました",
         },
         messages:{
             save:'save',
@@ -89,10 +97,15 @@ export default {
             title:"title",
             url:"url [required]",
             otherError:"An error occurred on the server side, please wait a few seconds and try again",
+            createdBookMark:"created bookmark",
+            updatedBookMark:"updated bookmark",
         },
         bookMarkId    :this.originalBookMark.id,
         bookMarkTitle :this.originalBookMark.title,
         bookMarkUrl   :this.originalBookMark.url,
+
+        createdBookMarkFlag:false,
+        updatedBookMarkFlag:false,
 
         // 初期の読み込みで空配列などが無いとエラーを吐かれる
         errorMessages:{
@@ -133,6 +146,17 @@ export default {
                 bookMarkUrl  :this.bookMarkUrl,
             })
         },
+        async getBookmarkId(){
+            // 新規追加した時に更新用にidをとって来ないと行けない
+            await axios.post('bookmark/id',{
+                bookMarkUrl  :this.bookMarkUrl,
+            })
+            .then((res) => {
+                console.log(res);
+                this.bookMarkId = res.data.bookMarkId
+            })
+            .catch(() => {})
+        },
         deleteBookMark() {this.$emit('triggerDeleteBookMark')},
         // エラーを配置
         setErrors(errors){
@@ -143,6 +167,14 @@ export default {
                 }
             }
             else { this.errorMessages = errors.data.messages }
+        },
+        showCreatedBookMarkMessage(){
+            this.createdBookMarkFlag = true
+            setTimeout(()=>{this.createdBookMarkFlag = false}, 3000);
+        },
+        showUpdatedBookMarkMessage(){
+            this.updatedBookMarkFlag = true
+            setTimeout(()=>{this.updatedBookMarkFlag = false}, 3000);
         },
     },
     mounted() {

@@ -4,9 +4,9 @@
             ref="BookMarkComponent"
             @triggerSubmit="submit"
             :originalBookMark="{
-                id:1,
-                title:'test',
-                url:'http://google.com'
+                id   :propsBookmarkId,
+                title:propsBookmarkTitle,
+                url  :propsBookmarkUrl
             }"
         />
         <TagComponent
@@ -23,7 +23,9 @@ import BookMarkComponent from '@/components/BookMarkComponent.vue'
 export default {
     data() {
         return {
-            
+            propsBookmarkId:null,
+            propsBookmarkTitle:null,
+            propsBookmarkUrl:null,
         }
     },
     components:{
@@ -40,24 +42,27 @@ export default {
             this.$store.commit('switchGlobalLoading')
             // 新規登録
             if(bookMarkId == null){
-                await axios.post('/api/bookmark/store',{
+                await axios.post('bookmark/store',{
                     bookMarkTitle:bookMarkTitle,
                     bookMarkUrl  :bookMarkUrl,
                     tagList      :this.$refs.TagComponent.serveCheckedTagList(),
                     timezone     :Intl.DateTimeFormat().resolvedOptions().timeZone
                 })
-                .then((res)=>{console.log(res);})
+                .then(()=>{
+                    this.$refs.BookMarkComponent.getBookmarkId()
+                    this.$refs.BookMarkComponent.showCreatedBookMarkMessage()
+                })
                 .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
                 .finally(()=> this.$store.commit('switchGlobalLoading',false))
             } else {
-                await axios.put('/api/bookmark/update',{
+                await axios.put('bookmark/update',{
                 bookMarkId   :bookMarkId,
                 bookMarkTitle:bookMarkTitle,
                 bookMarkUrl  :bookMarkUrl,
                 tagList      :this.$refs.TagComponent.serveCheckedTagList(),
                 timezone     :Intl.DateTimeFormat().resolvedOptions().timeZone
             })
-            .then((res)=>{console.log(res)})
+            .then(()=>{this.$refs.BookMarkComponent.showUpdatedBookMarkMessage()})
             .catch((errors) => {this.$refs.BookMarkComponent.setErrors(errors.response)})
             .finally(()=> this.$store.commit('switchGlobalLoading',false))
             }

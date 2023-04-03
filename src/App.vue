@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <Login v-if="!logined"/>
+        <Login v-if="this.$store.getters.getIsLogined == false "/>
         <Main v-else/>
 
         <!-- ここにログアウトボタン -->
@@ -18,7 +18,6 @@ import Main from './Views/Main.vue'
 export default {
     data() {
         return {
-            logined:false
         }
     },
     components: {
@@ -26,19 +25,25 @@ export default {
         Login
     },
     methods: {
-        logout(){
+        async logout(){
+            this.$store.commit('switchGlobalLoading')
             // axios通信
-            // トークン削除
-            localStorage.removeItem('sundlfAddonToken')
-            this.logined = false
+            await axios
+                .get('/api/extended/logout')
+                .then((res) => {
+                    // トークン削除
+                    localStorage.removeItem('sundlfAddonToken')
+                    this.$store.commit('setIsLogined',false)
+                })
+                .catch((err) => {console.log(err)})
+                .finally(()=> this.$store.commit('switchGlobalLoading',false))
         }
     },
     mounted() {
         if ((window.navigator.language).substring(0,2) == "ja") {this.$store.commit('setLang', "ja")}
         if (localStorage.getItem('sundlfAddonToken') != null) {
-            this.logined = true
+            this.$store.commit('setIsLogined',true)
         }
-        console.log(localStorage.getItem('sundlfAddonToken'));
     }
 }
 </script>
