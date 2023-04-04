@@ -37,7 +37,21 @@ export default {
             await chrome.storage.local.remove("testToken").then(()=>{
                 console.log('removed');
             });
-        }
+        },
+        async checkIsTokenSeted(){
+            await chrome.storage.local.get(["testToken"])
+            .then((localStrageObject) => {
+                console.log("called");
+                console.log(localStrageObject.testToken);
+                if (localStrageObject.testToken != null) {
+                    console.log("token seted");
+                }
+            })
+            .catch((error) => {console.log(error);})
+        },
+    },
+    mounted() {
+        this.checkIsTokenSeted()
     },
 }
 </script>
