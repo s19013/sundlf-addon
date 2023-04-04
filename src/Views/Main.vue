@@ -81,11 +81,11 @@ export default {
             .finally(()=> this.$store.commit('switchGlobalLoading',false))
 
         },
-        async isThisBookMarkAllreadyExists(url){
-            // とりあえず今は適当なブクマ取ってきて実験して見る
+        async isThisBookMarkAllreadyExists(){
+            let [thisTab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
             this.$store.commit('switchGlobalLoading')
             await axios.post('bookmark/data',{
-                bookMarkUrl  :url,
+                bookMarkUrl  :thisTab.url,
             })
             .then((res)=>{
                 console.log(res.data);
@@ -96,18 +96,18 @@ export default {
                 // 現在のタイトルとurlを設置
                 let thisBookmark = {
                     id   :null,
-                    title:document.title,
-                    url  :location.href
+                    title:thisTab.title,
+                    url  :thisTab.url
                 }
                 this.$refs.BookMarkComponent.setBookMark(thisBookmark)
             })
             .finally(()=> {
                 setTimeout(()=>{this.$store.commit('switchGlobalLoading',false)}, 500);
             })
-        }
+        },
     },
     beforeMount(){
-        this.isThisBookMarkAllreadyExists(location.href)
+        this.isThisBookMarkAllreadyExists()
     },
 }
 </script>
