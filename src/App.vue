@@ -14,7 +14,8 @@ import Main from './Views/Main.vue'
 export default {
     data() {
         return {
-            isLogined:false
+            isLogined:false,
+            tokenTemp:null, // 外の変数にトークンを一旦貼り付けないとスコープとかの関係上難しい
         }
     },
     components: {
@@ -24,6 +25,11 @@ export default {
     methods: {
         async removeToken(){
             await chrome.storage.local.remove('sundlfAddonToken', function() {console.log('removed');});
+        },
+        PasteTokenIntoHeader(token){
+            // スコープとかの関係上一旦外の関数でトークンをはらないと行けない
+            axios.defaults.headers.common['Authorization'] = token
+            console.log("token Set");
         },
         async logout(){
             this.$store.commit('switchGlobalLoading')
@@ -35,20 +41,30 @@ export default {
 
                     this.isLogined=false
                 })
-                .catch((err) => {console.log(err)})
+                .catch((err) => {
+                    console.log(err)
+                    this.removeToken()
+                    this.isLogined=false
+
+                })
                 .finally(()=> this.$store.commit('switchGlobalLoading',false))
         },
         async logined(){
             this.isLogined=true
             // トークンをheaderにつける
-            await chrome.storage.local.get(["sundlfAddonToken"]).then((localStrageObject) => {
-                axios.defaults.headers.common['Authorization'] = localStrageObject.sundlfAddonToken
+            await chrome.storage.local.get(["sundlfAddonToken"])
+            .then((localStrageObject) => {
+                 this.PasteTokenIntoHeader(localStrageObject.sundlfAddonToken)
             })
+            
         },
         async chechkLogined(){
             await chrome.storage.local.get(["sundlfAddonToken"]).then((localStrageObject) => {
+                console.log(localStrageObject.sundlfAddonToken);
                 if (localStrageObject.sundlfAddonToken != null) {
-                    this.logined = true
+                    // トークンを持っていたら貼り付ける
+                    this.PasteTokenIntoHeader(localStrageObject.sundlfAddonToken)
+                    this.isLogined= true
                 }
             })
         }
