@@ -27,12 +27,11 @@ export default {
             });
         },
         async get(){
-            await chrome.storage.local.get(["testToken"]).then((result) => {
-                this.chromeData = result
-                // console.log("Value currently is " + result.key);
-                console.log("Value currently is " + result);
+            await chrome.storage.local.get("testToken").then((result) => {
+                this.chromeData = result.testToken
+                console.dir(result);
+                // console.log("Value currently is " + result);
             });
-            
         },
         async deleteToken(){
             await chrome.storage.local.remove("testToken").then(()=>{
