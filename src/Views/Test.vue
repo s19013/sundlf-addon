@@ -27,10 +27,10 @@ export default {
             });
         },
         async get(){
-            await chrome.storage.local.get("testToken").then((result) => {
-                this.chromeData = result.testToken
-                console.dir(result);
-                // console.log("Value currently is " + result);
+            await chrome.storage.local.get("testToken").then((localStrageObject) => {
+                this.chromeData = localStrageObject.testToken
+                console.dir(localStrageObject);
+                // console.log("Value currently is " + localStrageObject);
             });
         },
         async deleteToken(){
