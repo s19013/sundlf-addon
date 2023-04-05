@@ -82,8 +82,8 @@ export default {
 
         },
         async isThisBookMarkAllreadyExists(){
-            let [thisTab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
             this.$store.commit('switchGlobalLoading')
+            let [thisTab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
             await axios.post('bookmark/data',{
                 bookMarkUrl  :thisTab.url,
             })
