@@ -33,21 +33,9 @@ export default {
         },
         async logout(){
             this.$store.commit('switchGlobalLoading')
-            await axios
-                .get('logout')
-                .then((res) => {
-                    this.removeToken()
-                    // localStorage.removeItem('sundlfAddonToken')
-
-                    this.isLogined=false
-                })
-                .catch((err) => {
-                    console.log(err)
-                    this.removeToken()
-                    this.isLogined=false
-
-                })
-                .finally(()=> this.$store.commit('switchGlobalLoading',false))
+            this.removeToken()
+            this.isLogined=false
+            this.$store.commit('switchGlobalLoading',false)
         },
         async logined(){
             this.isLogined=true
