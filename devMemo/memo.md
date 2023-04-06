@@ -122,3 +122,5 @@ sanctumの認証の仕方をブレイクポイントで調べる
 ミドルウェア分けるだけでよいのでは?
 -> いけた
 -> \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,をルートミドルウェアにしてspaのところにだけ引っ掛けた
+
+postmanではAuthorizationにBearerを付けていた
