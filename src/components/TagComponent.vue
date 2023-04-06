@@ -195,11 +195,11 @@ export default {
                     //キャッシュにコピー
                     this.allTagCacheList = [...this.tagSearchResultList]
                     this.tagCacheList = [...this.tagSearchResultList]
+                    //初期ローディングフラグを切る
+                    this.isFirstSearchFlag = false
                 })
                 .catch((err) => {console.log(err)})
                 .finally(()=> this.disableFlag = false)
-            //初期ローディングフラグを切る
-            this.isFirstSearchFlag = false
         },
         // タグ検索
         async searchTag() {
