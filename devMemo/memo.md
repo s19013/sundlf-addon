@@ -124,3 +124,6 @@ sanctumの認証の仕方をブレイクポイントで調べる
 -> \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,をルートミドルウェアにしてspaのところにだけ引っ掛けた
 
 postmanではAuthorizationにBearerを付けていた
+
+ところでapiトークンを発行する必要がある場合､テストはどうするのかな?
+クリアできたはず!!
