@@ -67,6 +67,7 @@ export default {
             .then((res) => {
                 console.log(res);
                 localStorage.setItem('sundlfAddonToken', res.data.token)
+                axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('sundlfAddonToken');
                 this.$store.commit('setIsLogined',true)
             })
             .catch((res) => {

@@ -36,6 +36,7 @@ export default {
         if ((window.navigator.language).substring(0,2) == "ja") {this.$store.commit('setLang', "ja")}
         if (localStorage.getItem('sundlfAddonToken') != null) {
             this.$store.commit('setIsLogined',true)
+            axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('sundlfAddonToken');
         }
     }
 }
