@@ -202,7 +202,7 @@ export default {
         // タグ検索
         async searchTag() {
             //ローディングアニメ開始
-            this.disableFlag = false
+            this.disableFlag = true
 
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
