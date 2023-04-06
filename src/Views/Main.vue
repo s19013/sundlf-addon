@@ -105,7 +105,7 @@ export default {
             })
             .catch((errors) => {console.log(errors);})
             .finally(()=> {
-                setTimeout(()=>{this.$store.commit('switchGlobalLoading',false)}, 500);
+                this.$store.commit('switchGlobalLoading',false)
             })
         },
     },
