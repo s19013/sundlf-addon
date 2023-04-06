@@ -178,6 +178,9 @@ export default {
         },
         // 全件検索
         async searchAllTag() {
+            //ローディングアニメ開始
+            this.disableFlag = true
+
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
@@ -196,6 +199,7 @@ export default {
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
                 .catch((err) => {console.log(err)})
+                .finally(()=> this.disableFlag = false)
             //初期ローディングフラグを切る
             this.isFirstSearchFlag = false
         },
