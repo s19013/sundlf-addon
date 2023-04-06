@@ -40,13 +40,12 @@ export default {
             this.$store.commit('switchGlobalLoading',false)
         },
         async logined(){
-            this.isLogined=true
             // トークンをheaderにつける
             await chrome.storage.local.get(["sundlfAddonToken"])
             .then((localStrageObject) => {
-                 this.PasteTokenIntoHeader(localStrageObject.sundlfAddonToken)
+                this.PasteTokenIntoHeader(localStrageObject.sundlfAddonToken)
             })
-            
+            this.isLogined=true
         },
         async chechkLogined(){
             await chrome.storage.local.get(["sundlfAddonToken"]).then((localStrageObject) => {
