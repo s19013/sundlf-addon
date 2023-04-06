@@ -97,8 +97,8 @@ export default {
                     // 現在のタイトルとurlを設置
                     let thisBookmark = {
                         id   :null,
-                        title:document.title,
-                        url  :location.href
+                        title:thisTab.title,
+                        url  :thisTab.url
                     }
                     this.$refs.BookMarkComponent.setBookMark(thisBookmark)
                 }
