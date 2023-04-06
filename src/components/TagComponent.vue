@@ -1,16 +1,15 @@
 <template>
     <div class="TagComponent">
-        <SearchField
-            ref="SearchField"
-            :lang="$store.getters.getLang"
-            @triggerSearch="searchBranch"
-        />
         <TagList
             :tagList="checkedTagList"
             :lang="$store.getters.getLang"
             @popTag="popTag"
         />
-        
+        <SearchField
+            ref="SearchField"
+            :lang="$store.getters.getLang"
+            @triggerSearch="searchBranch"
+        />
 
         <!-- 読み込みアニメ -->
         <div class="divForProgressCircular">
