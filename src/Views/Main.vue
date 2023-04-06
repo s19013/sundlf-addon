@@ -109,7 +109,8 @@ export default {
             })
         },
     },
-    beforeMount(){
+    async beforeMount(){
+        await setTimeout(() => {}, 100) // トークンが貼り付けられるまで少しまつ
         this.isThisBookMarkAllreadyExists()
     },
 }
