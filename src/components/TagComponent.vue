@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="TagComponent">
         <SearchField
             ref="SearchField"
             :lang="$store.getters.getLang"
