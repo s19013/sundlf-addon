@@ -89,18 +89,20 @@ export default {
             })
             .then((res)=>{
                 console.log(res.data);
-                this.$refs.BookMarkComponent.setBookMark(res.data.bookmark)
-                this.$refs.TagComponent.setCheckedTagList(res.data.checkedTagList)
-            })
-            .catch((errors) => {
-                // 現在のタイトルとurlを設置
-                let thisBookmark = {
-                    id   :null,
-                    title:document.title,
-                    url  :location.href
+                if (res.data.result == "found") {
+                    this.$refs.BookMarkComponent.setBookMark(res.data.bookmark)
+                    this.$refs.TagComponent.setCheckedTagList(res.data.checkedTagList)
+                } else {
+                    // 現在のタイトルとurlを設置
+                    let thisBookmark = {
+                        id   :null,
+                        title:document.title,
+                        url  :location.href
+                    }
+                    this.$refs.BookMarkComponent.setBookMark(thisBookmark)
                 }
-                this.$refs.BookMarkComponent.setBookMark(thisBookmark)
             })
+            .catch((errors) => {console.log(errors);})
             .finally(()=> {
                 setTimeout(()=>{this.$store.commit('switchGlobalLoading',false)}, 500);
             })
