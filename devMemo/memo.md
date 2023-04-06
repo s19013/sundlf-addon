@@ -120,3 +120,5 @@ sanctumの認証の仕方をブレイクポイントで調べる
 でも､sanctumあたりを直接いじっても､本番環境まで反映されない
 
 ミドルウェア分けるだけでよいのでは?
+-> いけた
+-> \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,をルートミドルウェアにしてspaのところにだけ引っ掛けた
