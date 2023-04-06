@@ -23,11 +23,15 @@ import axios from 'axios';
 window.axios = axios;
 axios.defaults.withCredentials = true;
 window.axios.defaults.headers.common['UserLang'] = window.navigator.language;
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api/extended/';
+//開発↓
+// axios.defaults.baseURL = 'http://127.0.0.1:8000/api/extended/'; 
+//本番↓
+axios.defaults.baseURL = 'https://sundlf.com/api/extended/';
+
+
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=utf-8';
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-// axios.defaults.headers.common['Authorization'] = localStorage.getItem('sundlfAddonToken');
-// axios.defaults.headers.common['Authorization'] = null //app.vue中でセットする
+
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
