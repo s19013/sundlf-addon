@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="BookMarkComponent">
         <div class="head">
                 <v-btn
                     size="small" color="error" class="global_css_haveIconButton_Margin"

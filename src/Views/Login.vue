@@ -60,6 +60,7 @@ export default {
     },
     methods: {
         async login(){
+            this.localLoading = true
             await axios.post('login',{
                 email:this.email,
                 password:this.password,
@@ -67,6 +68,7 @@ export default {
             .then((res) => {
                 console.log(res);
                 localStorage.setItem('sundlfAddonToken', res.data.token)
+                axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('sundlfAddonToken');
                 this.$store.commit('setIsLogined',true)
             })
             .catch((res) => {
@@ -76,6 +78,7 @@ export default {
                 this.errorMessages.password = messages.password
                 this.errorMessages.other = messages.other
             })
+            .finally(() => {this.localLoading = false})
         }
     },
 }

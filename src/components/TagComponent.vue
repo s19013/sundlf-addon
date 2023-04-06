@@ -1,29 +1,29 @@
 <template>
-    <div>
-        <SearchField
-            ref="SearchField"
-            :lang="$store.getters.getLang"
-            @triggerSearch="searchBranch"
-        />
+    <div class="TagComponent">
         <TagList
             :tagList="checkedTagList"
             :lang="$store.getters.getLang"
             @popTag="popTag"
         />
-        
+        <SearchField
+            ref="SearchField"
+            :lang="$store.getters.getLang"
+            @triggerSearch="searchBranch"
+        />
 
         <!-- 読み込みアニメ -->
-        <v-progress-circular
-            :size=100
-            color="primary"
-            v-show="$store.getters.getGlobalLoading == true || disableFlag == true"
-            indeterminate
-        ></v-progress-circular>
+        <div class="divForProgressCircular">
+            <v-progress-circular
+                :size=100
+                color="primary"
+                v-show="$store.getters.getGlobalLoading == true || disableFlag == true"
+                indeterminate
+            ></v-progress-circular>
+        </div>
 
         <!-- タグ一覧 -->
         <ul
-            width="100%"
-            max-height="1vh"
+            v-show="$store.getters.getGlobalLoading == false && disableFlag == false"
         >
             <li v-for="tag of tagSearchResultList" :key="tag.id">
                 <input
@@ -176,6 +176,9 @@ export default {
         },
         // 全件検索
         async searchAllTag() {
+            //ローディングアニメ開始
+            this.disableFlag = true
+
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
@@ -192,15 +195,16 @@ export default {
                     //キャッシュにコピー
                     this.allTagCacheList = [...this.tagSearchResultList]
                     this.tagCacheList = [...this.tagSearchResultList]
+                    //初期ローディングフラグを切る
+                    this.isFirstSearchFlag = false
                 })
                 .catch((err) => {console.log(err)})
-            //初期ローディングフラグを切る
-            this.isFirstSearchFlag = false
+                .finally(()=> this.disableFlag = false)
         },
         // タグ検索
         async searchTag() {
             //ローディングアニメ開始
-            this.disableFlag = false
+            this.disableFlag = true
 
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
@@ -238,11 +242,12 @@ export default {
             this.checkedTagList = this.checkedTagList.sort(sortArrayByName)
         }
     },
-    mounted() {
+    async mounted() {
         this.$nextTick(function () {
             if (this.$store.getters.getLang == "ja"){this.messages = this.japanese}
         })
 
+        await setTimeout(() => {}, 100) // トークンが貼り付けられるまで少しまつ
         this.searchAllTag()
     }
 }
@@ -260,9 +265,10 @@ ul{
         width: 100%;
     }
 }
-.v-progress-circular {
-    margin: auto;
+.divForProgressCircular{
+    text-align: center;
 }
+
 .areaCreateNewTag {
     margin: 1rem 0 0.5rem 0;
     .v-form{

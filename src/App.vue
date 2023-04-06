@@ -28,21 +28,15 @@ export default {
         async logout(){
             this.$store.commit('switchGlobalLoading')
             // axios通信
-            await axios
-                .get('logout')
-                .then((res) => {
-                    // トークン削除
-                    localStorage.removeItem('sundlfAddonToken')
-                    this.$store.commit('setIsLogined',false)
-                })
-                .catch((err) => {console.log(err)})
-                .finally(()=> this.$store.commit('switchGlobalLoading',false))
+            localStorage.removeItem('sundlfAddonToken')
+            this.$store.commit('setIsLogined',false)
         }
     },
     mounted() {
         if ((window.navigator.language).substring(0,2) == "ja") {this.$store.commit('setLang', "ja")}
         if (localStorage.getItem('sundlfAddonToken') != null) {
             this.$store.commit('setIsLogined',true)
+            axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('sundlfAddonToken');
         }
     }
 }
