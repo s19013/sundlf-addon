@@ -7,6 +7,7 @@
             @triggerSubmit="submit"
             @triggerDeleteBookMark = "deleteBookMark"
         />
+        <hr>
         <TagComponent
             ref="TagComponent"
         />
@@ -113,3 +114,13 @@ export default {
     },
 }
 </script>
+
+<style scoped lang="scss">
+hr{margin:1.5rem 0}
+.logout{
+    margin-top: 2rem;
+    color: blue;
+    text-decoration:underline;
+    cursor: pointer;
+}
+</style>
