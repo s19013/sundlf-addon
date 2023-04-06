@@ -13,17 +13,20 @@
         
 
         <!-- 読み込みアニメ -->
-        <v-progress-circular
-            :size=100
-            color="primary"
-            v-show="$store.getters.getGlobalLoading == true || disableFlag == true"
-            indeterminate
-        ></v-progress-circular>
+        <div class="divForProgressCircular">
+            <v-progress-circular
+                :size=100
+                color="primary"
+                v-show="$store.getters.getGlobalLoading == true || disableFlag == true"
+                indeterminate
+            ></v-progress-circular>
+        </div>
 
         <!-- タグ一覧 -->
         <ul
             width="100%"
             max-height="1vh"
+            v-show="$store.getters.getGlobalLoading == false && disableFlag == false"
         >
             <li v-for="tag of tagSearchResultList" :key="tag.id">
                 <input
@@ -260,9 +263,10 @@ ul{
         width: 100%;
     }
 }
-.v-progress-circular {
-    margin: auto;
+.divForProgressCircular{
+    text-align: center;
 }
+
 .areaCreateNewTag {
     margin: 1rem 0 0.5rem 0;
     .v-form{
