@@ -85,7 +85,7 @@ export default {
                     this.errorMessages.other = res.response
                 }
             })
-            .finally(() => {this.localLoading = true})
+            .finally(() => {this.localLoading = false})
         }
     },
 }
