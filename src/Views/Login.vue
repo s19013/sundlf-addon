@@ -59,6 +59,9 @@ export default {
         }
     },
     methods: {
+        async setToken(token){
+            await chrome.storage.local.set({ sundlfAddonToken: token })
+        },
         async login(){
             this.localLoading = true
             await axios.post('login',{
@@ -67,16 +70,20 @@ export default {
             })
             .then((res) => {
                 console.log(res);
-                localStorage.setItem('sundlfAddonToken', res.data.token)
-                axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('sundlfAddonToken');
-                this.$store.commit('setIsLogined',true)
+                this.setToken(res.data.token)
+                this.$emit("logined")
             })
             .catch((res) => {
                 console.log(res.response);
-                let messages = res.response.data.messages
-                this.errorMessages.email = messages.email
-                this.errorMessages.password = messages.password
-                this.errorMessages.other = messages.other
+                try {
+                    let messages = res.response.data.messages
+                    this.errorMessages.email = messages.email
+                    this.errorMessages.password = messages.password
+                    this.errorMessages.other = messages.other
+                }
+                catch (error) {
+                    this.errorMessages.other = res.response
+                }
             })
             .finally(() => {this.localLoading = false})
         }
