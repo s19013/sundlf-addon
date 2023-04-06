@@ -26,10 +26,12 @@ export default {
         async removeToken(){
             await chrome.storage.local.remove('sundlfAddonToken', function() {console.log('removed');});
         },
-        PasteTokenIntoHeader(token){
+        async PasteTokenIntoHeader(token){
             // スコープとかの関係上一旦外の関数でトークンをはらないと行けない
-            axios.defaults.headers.common['Authorization'] = token
-            console.log("token Set");
+            axios.defaults.headers.common['Authorization'] = "Bearer " + token
+            console.log(axios.defaults.headers.common['Authorization']);
+
+            // どうしてもまってもらう
         },
         async logout(){
             this.$store.commit('switchGlobalLoading')
