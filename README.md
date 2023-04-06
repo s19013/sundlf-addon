@@ -19,3 +19,4 @@ chrome.storageのスコープ周りはqiitaのちょうどよい記事になり�
 -> 私のjsや非同期､スコープ周りの知識が足りないだけかもしれないが｡
 
 # 参考にしたサイトなど
+[Laravel リクエストログを出力する](https://qiita.com/ucan-lab/items/bfd15b096a916f811468)
