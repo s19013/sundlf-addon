@@ -187,7 +187,7 @@ export default {
 <style scoped lang="scss">
 .head{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1rem;
 }
