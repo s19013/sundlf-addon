@@ -175,12 +175,25 @@ export default {
             this.updatedBookMarkFlag = true
             setTimeout(()=>{this.updatedBookMarkFlag = false}, 3000);
         },
+        keyEvents(event){
+            if (event.ctrlKey || event.key === "Meta") {
+                // 送信
+                if(event.code === "Enter"){this.submit()}
+            }
+        }
     },
     mounted() {
         this.$nextTick(function () {
             if (this.$store.state.lang == "ja"){this.messages = this.japanese}
         })
+
+        //キーボード受付
+        document.addEventListener('keydown', this.keyEvents)
     },
+    beforeUnmount() {
+        //キーボードによる動作の削除(副作用みたいエラーがでるため)
+        document.removeEventListener("keydown", this.keyEvents);
+    }
 }
 </script>
 
