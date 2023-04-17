@@ -2,9 +2,15 @@
     "manifest_version": 3,
     "name": "sundlf-bookmark-addon",
     "version": "1.0.0",
-    "description": "Vue3でChrome拡張を作成したサンプルです。",
-    "permissions": ["activeTab", "scripting", "tabs","storage","cookies"],
+    "description": "sundlfにブックマークを保存をより楽にするアドオンです",
+    "permissions": ["activeTab", "scripting", "tabs","storage"],
     "action": {
         "default_popup": "index.html"
+    },
+    "icons": {
+        "16" : "icon_16.png",
+        "32" : "icon_32.png",
+        "48" : "icon_64.png",
+        "128": "icon_128.png"
     }
 }

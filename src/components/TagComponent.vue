@@ -27,7 +27,6 @@
         >
             <li v-for="tag of tagSearchResultList" :key="tag.id">
                 <input
-                    class="global_css_input"
                     type="checkbox"
                     v-model="checkedTagList"
                     :id="tag.id"
@@ -259,11 +258,12 @@ ul{
     max-height: 50vh;
     outline:black solid 1px;
     padding:0.5rem;
-    li{display: block;}
-    label {
-        margin-left: 0.5rem;
-        width: 100%;
+    li{
+        display: flex;
+        gap:0.5rem
     }
+    label {width: 100%;}
+
 }
 .divForProgressCircular{
     text-align: center;
