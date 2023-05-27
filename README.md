@@ -44,6 +44,7 @@ spa認証で使う`EnsureFrontendRequestsAreStateful`をapiトークン認証に
 * chrome.storage周りで苦しんだ
 * 必要な情報がなかなか見つからない｡
 * 公式リファレンスを読んでもわからないことはある
+* 最初は`composition api`で作ろうと思ったが､早く完成させたいため､かきなれた`option api`で書いた
 
 # 参考にしたサイトなど
 
