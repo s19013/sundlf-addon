@@ -16,14 +16,14 @@
             <v-progress-circular
                 :size=100
                 color="primary"
-                v-show="$store.getters.getGlobalLoading == true || disableFlag == true"
+                v-show="$store.getters.getGlobalLoading == true"
                 indeterminate
             ></v-progress-circular>
         </div>
 
         <!-- タグ一覧 -->
         <ul
-            v-show="$store.getters.getGlobalLoading == false && disableFlag == false"
+            v-show="$store.getters.getGlobalLoading == false"
         >
             <li v-for="tag of tagSearchResultList" :key="tag.id">
                 <input
@@ -31,7 +31,7 @@
                     v-model="checkedTagList"
                     :id="tag.id"
                     :value="{ id: tag.id, name: tag.name }"
-                    :disabled="$store.getters.getGlobalLoading || disableFlag == true"
+                    :disabled="$store.getters.getGlobalLoading"
                 />
                 <label :for="tag.id">{{ tag.name }}</label>
             </li>
@@ -55,7 +55,7 @@
                     class="global_css_input"
                     type="text"
                     v-model="newTag"
-                    :disabled="$store.getters.getGlobalLoading || disableFlag == true"
+                    :disabled="$store.getters.getGlobalLoading "
                     :placeholder="messages.tagName"
                 >
                 <v-btn
@@ -63,8 +63,8 @@
                     color="#BBDEFB"
                     size="small"
                     elevation="2"
-                    :disabled="$store.getters.getGlobalLoading || disableFlag == true"
-                    :loading ="$store.getters.getGlobalLoading || disableFlag == true"
+                    :disabled="$store.getters.getGlobalLoading"
+                    :loading ="$store.getters.getGlobalLoading"
                     @click.stop="createNewTag()">
                     <v-icon>mdi-content-save</v-icon>
                     <p>{{ messages.create }}</p>
@@ -118,9 +118,6 @@ export default {
 
             createdTagFlag:false,
 
-            //loding
-            disableFlag: false,
-
             // errorFlag
             errorMessages: { name: [] },
 
@@ -140,7 +137,6 @@ export default {
     methods: {
         // 新規タグ作成
         async createNewTag() {
-            this.disableFlag = true
             await axios
                 .post('tag/store', { name: this.newTag })
                 .then((res) => {
@@ -157,7 +153,6 @@ export default {
                     this.showCreatedTagMessage()
                 })
                 .catch((errors) => {this.errorMessages = errors.response.data.messages})
-                .finally(()=> this.disableFlag = false)
         },
         // タグ検索
         async searchBranch() {
@@ -181,9 +176,6 @@ export default {
         },
         // 全件検索
         async searchAllTag() {
-            //ローディングアニメ開始
-            this.disableFlag = true
-
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
@@ -204,13 +196,9 @@ export default {
                     this.isFirstSearchFlag = false
                 })
                 .catch((err) => {console.log(err)})
-                .finally(()=> this.disableFlag = false)
         },
         // タグ検索
         async searchTag() {
-            //ローディングアニメ開始
-            this.disableFlag = true
-
             //配列,キャッシュ初期化
             this.tagSearchResultList = []
             this.tagCacheList = [] //キャッシュをクリアするのは既存チェックボックスを外す時に出てくるバグを防ぐため
@@ -227,7 +215,6 @@ export default {
                     this.tagCacheList = [...this.tagSearchResultList]
                 })
                 .catch((err) => {console.log(err)})
-                .finally(()=> this.disableFlag = false)
         },
         // タグ削除
         popTag(i) {this.checkedTagList.splice(i, 1)},
