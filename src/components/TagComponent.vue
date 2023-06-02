@@ -160,7 +160,10 @@ export default {
                 .finally(()=> this.disableFlag = false)
         },
         // タグ検索
-        searchBranch() {
+        async searchBranch() {
+            // 二重送信防止のため検索ボタンをロック
+            this.$store.commit('switchGlobalLoading')
+
             if (this.$refs.SearchField.serveKeywordToParent() == '') {
                 //初期ローディング以外の全件検索だったらキャッシュを使う
                 if (this.isFirstSearchFlag == false) {
@@ -168,10 +171,13 @@ export default {
                     this.tagCacheList = this.allTagCacheList
                 }
                 // 初期ローディング､更新後の全件検索
-                else {this.searchAllTag()}
+                else {await this.searchAllTag()}
             }
             // 他の検索
-            else {this.searchTag()}
+            else {await this.searchTag()}
+
+            // ロックを解除
+            this.$store.commit('switchGlobalLoading')
         },
         // 全件検索
         async searchAllTag() {
