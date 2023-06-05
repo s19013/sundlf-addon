@@ -3,7 +3,7 @@
     "name": "sundlf-bookmark-addon",
     "version": "1.0.0",
     "description": "sundlfにブックマークを保存をより楽にするアドオンです",
-    "permissions": ["activeTab", "scripting", "tabs","storage"],
+    "permissions": ["tabs","storage"],
     "action": {
         "default_popup": "index.html"
     },
