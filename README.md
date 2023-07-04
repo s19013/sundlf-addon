@@ -1,7 +1,7 @@
 # sundlf-bookmark-addon
 
 # リンク
-(1､2ヶ月ほどおまちください)
+[アドオンダウンロードページへ](https://chrome.google.com/webstore/detail/sundlf-bookmark-addon/mfcobcdpjbgnpbkhbbfaabkkphpceoka)
 
 # 使った技術
 * vue.js
