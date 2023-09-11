@@ -1,5 +1,9 @@
 # sundlf-bookmark-addon
 
+# 概要
+sundlfを開かずともブックマークが保存できるアドオンです
+[sundlf](https://sundlf.com/?utm_source=github)
+
 # リンク
 [アドオンダウンロードページへ](https://chrome.google.com/webstore/detail/sundlf-bookmark-addon/mfcobcdpjbgnpbkhbbfaabkkphpceoka)
 
