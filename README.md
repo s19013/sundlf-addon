@@ -52,6 +52,9 @@ spa認証で使う`EnsureFrontendRequestsAreStateful`をapiトークン認証に
 
 # 参考にしたサイトなど
 
+# 今後
+アプリ自体へのショートカット機能
+
 # 未来の編集する私へ
 なにか機能を足すのなら一度`beforeCromeApi`で編集してテストしてください
 その後`cromeApi`にチェリーピッカーでコピーして拡張機能ようにコピーしてください
