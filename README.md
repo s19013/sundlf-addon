@@ -51,6 +51,9 @@ spa認証で使う`EnsureFrontendRequestsAreStateful`をapiトークン認証に
 * 最初は`composition api`で作ろうと思ったが､早く完成させたいため､かきなれた`option api`で書いた
 
 # 参考にしたサイトなど
+[Chrome拡張の作り方まとめ](https://qiita.com/omukaik/items/4df89dd68a8359907d48)
+[chrome.storage](https://developer.chrome.com/docs/extensions/reference/storage/)
+[API reference](https://developer.chrome.com/docs/extensions/reference/)
 
 # 今後
 アプリ自体へのショートカット機能
