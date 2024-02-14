@@ -33,6 +33,10 @@
 * トークン発行
 * 認証
 
+# デモ
+新規にブックマークを登録
+<video height="300" src="https://github.com/s19013/sundlf-addon/assets/50346558/0509e5e6-7aa1-4d80-b6a3-f62ec01a81a7" ></video>
+
 # 苦労したところ
 * corsという部分で躓いた｡  
   直感でバックに問題があると予想  
@@ -51,9 +55,9 @@ spa認証で使う`EnsureFrontendRequestsAreStateful`をapiトークン認証に
 * 最初は`composition api`で作ろうと思ったが､早く完成させたいため､かきなれた`option api`で書いた
 
 # 参考にしたサイトなど
-[Chrome拡張の作り方まとめ](https://qiita.com/omukaik/items/4df89dd68a8359907d48)
-[chrome.storage](https://developer.chrome.com/docs/extensions/reference/storage/)
-[API reference](https://developer.chrome.com/docs/extensions/reference/)
+[Chrome拡張の作り方まとめ](https://qiita.com/omukaik/items/4df89dd68a8359907d48)  
+[chrome.storage](https://developer.chrome.com/docs/extensions/reference/storage/)  
+[API reference](https://developer.chrome.com/docs/extensions/reference/)  
 
 # 今後
 アプリ自体へのショートカット機能
